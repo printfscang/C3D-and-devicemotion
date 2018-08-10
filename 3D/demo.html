@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+    <title>css3d造物节</title>
+     <script src="scripts/jquery-3.3.1.min.js"></script> 
+    <style type="text/css">
+    body{
+        background:url(img/bg.jpg);
+    }
+    .container{
+        width:8.0625rem;
+        margin:0 auto 0 auto;
+        border:1px solid red;
+        perspective: 25rem;
+    }
+    #box {
+        height:100%;
+        transform-style: preserve-3d;
+        -webkit-perspective-origin:50% 50%;
+
+    }
+    #box > div{
+        position:absolute;
+        width: 8.0625rem;
+        height: 73.125rem;
+
+    }
+    /*#box .one{
+        background:url(./img/p1.png) no-repeat;
+    }*/
+    </style>
+    
+</head>
+
+
+<body>
+<div style="text-align: right; position: absolute; right: 1rem; z-index: 999" id="laba" >⏸</div>
+    <div id="container" class="container">
+        <div id='box'>
+            <div class="one">1</div>
+            <div>2</div>
+            <div>3</div>
+            <div>4</div>
+            <div>5</div>
+            <div>6</div>
+            <div>7</div>
+            <div>8</div>
+            <div>9</div>
+            <div>10</div>
+            <div>11</div>
+            <div>12</div>
+            <div>13</div>
+            <div>14</div>
+            <div>15</div>
+            <div>16</div>
+            <div>17</div>
+            <div>18</div>
+            <div>19</div>
+            <div>20</div>
+        </div>
+    </div>
+
+  
+<script type="text/javascript">
+
+var radius = calculateRadius(129,20);
+var box = document.getElementById('box');
+
+var arr = $('#box > div');
+for(var i=0;i<arr.length;i++){
+    arr[i].style.background = 'url("./img/p'+(i+1)+'.png") no-repeat';
+    arr[i].style.WebkitTransform = 'rotateY('+(360/20*i)+'deg) translateZ('+radius+'px)';
+}
+
+function calculateRadius(positionLen,totalNum){
+    return Math.round(positionLen / (2*Math.tan(Math.PI/totalNum))) - 3;
+
+}
+
+
+
+var startX = 0,
+x = 0 ,
+endX = 0;
+var flag = true;
+
+
+$('#box').on('touchstart',function(event){
+    event.preventDefault();
+
+    var touch = event.targetTouches[0];
+    startX = touch.pageX - x;
+});
+
+$('#box').on('touchmove',function(event){
+    if(flag){
+        event.preventDefault();
+
+        var touch = event.targetTouches[0];
+        endX = touch.pageX;
+        x = endX - startX ;
+        box.style.transform = 'rotateY('+x+'deg)';
+
+    }else{
+        return false;
+    }
+
+
+});
+
+$('#box').on('touchend',function(event){
+    console.log("over");
+});
+</script>
+</body>
+
+</html>

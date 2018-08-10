@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>摇一摇</title>
+
+</head>
+<body>
+	<p>摇一摇播放视频</p>
+	<div>
+		<video controls="controls" id="yaoyiyao">
+			<source src="audio/movie.ogg" type="video/ogg">
+			<source src="audio/movie.mp4" type="video/mp4">
+		</video>
+	</div>
+
+
+	<script>
+	var yaoyiyao = document.getElementById('yaoyiyao');
+	if(window.DeviceMotionEvent){
+    window.addEventListener('devicemotion', YaoYiYao,false);
+    }
+    var speed =10;//speed
+    var x = y = z = lastX = lastY = lastZ =0;
+    function YaoYiYao(eventData){
+    var acceleration =eventData.accelerationIncludingGravity;
+    x = acceleration.x;
+    y = acceleration.y;
+    z = acceleration.z;
+    if(Math.abs(x-lastX)> speed ||Math.abs(y-lastY)> speed ||Math.abs(z-lastZ)> speed){
+    //简单的摇一摇触发代码
+    yaoyiyao.play();
+
+    }
+    lastX = x;
+    lastY = y;
+    lastZ = z;
+    }
+
+	</script>
+</body>
+
+</html>

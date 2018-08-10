@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>3d城市</title>
+	<style type="text/css">
+	body{
+		background:rgba(255,200,100,.8);
+	}
+	.container{
+		margin:0 auto 0 auto;
+		width:2.8125rem;
+		perspective: 6rem;
+
+
+	}
+	#box{
+		transform-style:preserve-3d;
+		-webkit-perspective-origin:50% 50%;
+		height:100%;
+
+	}
+	#box > div{
+		position:absolute;
+		width: 2.8125rem;
+        height: 30.1875rem;
+
+	}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div id="box">
+			<div>1</div>
+			<div>2</div>
+			<div>3</div>
+			<div>4</div>
+			<div>5</div>
+			<div>6</div>
+			<div>7</div>
+			<div>8</div>
+			<div>9</div>
+			<div>10</div>
+			<div>11</div>
+			<div>12</div>
+			<div>13</div>
+			<div>14</div>
+			<div>15</div>
+			<div>16</div>
+		</div>
+	</div>
+
+
+	<script src="http://cdn.bootcss.com/zepto/1.0rc1/zepto.min.js"></script> 
+	<script>
+	var box = document.getElementById('box');
+	var arr = box.getElementsByTagName('div');
+	var radius = calculateRadius(45,16);
+
+	for(var i=0;i<arr.length;i++){
+		arr[i].style.background = "url('images/traffic_"+(i+1)+".gif') no-repeat";
+		arr[i].style.transform = 'rotateY('+(360/16*i)+'deg) translateZ('+radius+'px)';
+	}
+
+	function calculateRadius(position,totalNum){
+		return Math.round(position / ( 2* Math.tan(Math.PI/totalNum))) - 3;
+	}
+
+
+	var startX =0, x=0, endX=0;
+	var flag = true;
+
+	$('#abox').on('touchstart',function(event){
+		event.preventDefault();
+		var touch = event.targetTouches[0];
+		startX = touch.pageX() - x;
+
+	});
+	$('#box').on('touchmove',function(){
+		if(flag){
+			var touch = event.targetTouches[0];
+			endX = touch.pageX;
+			x = endX - startX;
+			box.style.transform = 'rotateY('+x+'deg)';
+		}else{
+			return false;
+		}
+		
+	});
+	$('#box').on('touchend',function(){
+		console.log('success');
+	});
+	
+	</script>
+</body>
+</html>
